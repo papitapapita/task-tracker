@@ -4,10 +4,9 @@
         "jest": true,
         "es6": true
     },
-    "plugins": ["jest"],
     "extends": [
         "eslint:recommended",
         "plugin:jest/recommended"
-    ]
-
+    ],
+    "plugins": ["jest"]
 }

@@ -8,7 +8,7 @@ export class Task {
 
     constructor(description) {
         this.#id = Task.currentId++;
-        this.#description = description;
+        this.#description = this.verifyDescription(description);
         this.#status = false;
         this.#createdAt = new Date();
         this.#updatedAt = this.#createdAt;
@@ -50,4 +50,9 @@ export class Task {
     get description() {
         return this.#description;
     }
+
+    get status() {
+        return this.#status;
+    }
+
 }

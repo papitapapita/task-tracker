@@ -17,10 +17,11 @@ describe('Task Class', () => {
         expect(() => new Task('').toThrow(Error));
     });
 
-    test('should switch status correctly', () => {
+    test('should switch status correctly', async () => {
         const task = new Task('Test task');
         expect(task.updatedAt).toEqual(task.createdAt);
         const initialStatus = task.status;
+        await new Promise(resolve => setTimeout(resolve, 1));
         task.switchStatus();
         expect(task.status).toBe(!initialStatus);
         expect(task.updatedAt).not.toEqual(task.createdAt);
@@ -29,7 +30,7 @@ describe('Task Class', () => {
     test('should update the description', () => {
         const task = new Task('Initial Descriptor');
         task.description = 'Updated description';
-        expect(taks.description).toBe('Updated description');
+        expect(task.description).toBe('Updated description');
     });
 
     test('should validate description updates', () => {
