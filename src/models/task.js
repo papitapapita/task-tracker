@@ -1,15 +1,14 @@
 export class Task {
-  static currentId = 0;
   #id;
   #updatedAt;
   #status;
   #description;
   #createdAt;
 
-  constructor(description) {
-    this.#id = Task.currentId++;
+  constructor(id, description) {
+    this.#id = id;
     this.#description = this.verifyDescription(description);
-    this.#status = 'not-completed';
+    this.#status = 'in-progress';
     this.#createdAt = new Date();
     this.#updatedAt = this.#createdAt;
   }
@@ -27,12 +26,20 @@ export class Task {
   }
 
   switchStatus() {
-    this.#status = !this.#status;
+    if (this.#status === 'in-progress') {
+      this.#status = 'completed';
+    } else {
+      this.#status = 'in-progress';
+    }
     this.#updatedAt = new Date();
   }
 
   get id() {
     return this.#id;
+  }
+
+  set id(id) {
+    this.#id = id;
   }
 
   get createdAt() {

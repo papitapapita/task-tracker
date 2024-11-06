@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { Task } from '../models/task.js';
 const PATH = path.resolve('./');
 const DIRECTORY_PATH = path.join(PATH, 'src/data');
 const FILE_PATH = path.join(DIRECTORY_PATH, 'tasks.json');
@@ -65,19 +64,11 @@ async function updateTask(id, updates) {
   }
 }
 
-updateTask
-
 async function deleteTask(id) {
   try {
     const tasks = await loadTasks();
-    const index = tasks.findIndex((task) => task.id == id);
-
-    if (index === -1) throw new Error(`Task with id: ${id} not found`);
-
-    const task = tasks.slice(index, 1);
-
-    saveTasks(tasks);
-    return task;
+    const newTasks = tasks.filter(task => task.id != id);
+    saveTasks(newTasks);
   } catch (error) {
     throw new Error(`Failed to delete task: ${error.message}`);
   }
