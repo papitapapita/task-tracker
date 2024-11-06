@@ -1,58 +1,68 @@
 export class Task {
-    static currentId = 0;
-    #id;
-    #updatedAt;
-    #status;
-    #description;
-    #createdAt;
+  static currentId = 0;
+  #id;
+  #updatedAt;
+  #status;
+  #description;
+  #createdAt;
 
-    constructor(description) {
-        this.#id = Task.currentId++;
-        this.#description = this.verifyDescription(description);
-        this.#status = false;
-        this.#createdAt = new Date();
-        this.#updatedAt = this.#createdAt;
+  constructor(description) {
+    this.#id = Task.currentId++;
+    this.#description = this.verifyDescription(description);
+    this.#status = 'not-completed';
+    this.#createdAt = new Date();
+    this.#updatedAt = this.#createdAt;
+  }
+
+  verifyDescription(description) {
+    if (typeof description !== 'string') {
+      throw new TypeError('Description must be a string');
     }
 
-    verifyDescription(description) {
-        if (typeof description !== 'string') {
-            throw new TypeError('Description must be a string');
-        }
-
-        if (description === "") {
-            throw new Error('Description cannot be empty');
-        }
-
-        return description;
+    if (description === '') {
+      throw new Error('Description cannot be empty');
     }
 
-    switchStatus() {
-        this.#status = !this.#status;
-        this.#updatedAt = new Date();
-    }
+    return description;
+  }
 
-    get id() {
-        return this.#id;
-    }
+  switchStatus() {
+    this.#status = !this.#status;
+    this.#updatedAt = new Date();
+  }
 
-    get createdAt() {
-        return this.#createdAt;
-    }
+  get id() {
+    return this.#id;
+  }
 
-    get updatedAt() {
-        return this.#updatedAt;
-    }
+  get createdAt() {
+    return this.#createdAt;
+  }
 
-    set description(description) {
-        this.#description = this.verifyDescription(description);
-    }
+  get updatedAt() {
+    return this.#updatedAt;
+  }
 
-    get description() {
-        return this.#description;
-    }
+  set description(description) {
+    this.#description = this.verifyDescription(description);
+  }
 
-    get status() {
-        return this.#status;
-    }
+  get description() {
+    return this.#description;
+  }
 
+  get status() {
+    return this.#status;
+  }
+
+  toJSON() {
+    return {
+      currentId: this.currentId,
+      id: this.#id,
+      updatedAt: this.#updatedAt,
+      status: this.#status,
+      description: this.#description,
+      createdAt: this.#createdAt
+    }
+  }
 }
