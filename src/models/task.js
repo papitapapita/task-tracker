@@ -1,12 +1,13 @@
 export class Task {
+  static currentId = 0;
   #id;
   #updatedAt;
   #status;
   #description;
   #createdAt;
 
-  constructor(id, description) {
-    this.#id = id;
+  constructor(description, id) {
+    this.#id = id || Task.currentId++;
     this.#description = this.verifyDescription(description);
     this.#status = 'in-progress';
     this.#createdAt = new Date();
@@ -69,7 +70,7 @@ export class Task {
       updatedAt: this.#updatedAt,
       status: this.#status,
       description: this.#description,
-      createdAt: this.#createdAt
-    }
+      createdAt: this.#createdAt,
+    };
   }
 }

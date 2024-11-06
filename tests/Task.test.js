@@ -20,10 +20,9 @@ describe('Task Class', () => {
     test('should switch status correctly', async () => {
         const task = new Task('Test task');
         expect(task.updatedAt).toEqual(task.createdAt);
-        const initialStatus = task.status;
         await new Promise(resolve => setTimeout(resolve, 1));
         task.switchStatus();
-        expect(task.status).toBe(!initialStatus);
+        expect(task.status).toBe('completed');
         expect(task.updatedAt).not.toEqual(task.createdAt);
     });
 

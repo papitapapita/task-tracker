@@ -5,25 +5,22 @@ const DIRECTORY_PATH = path.join(PATH, 'src/data');
 const FILE_PATH = path.join(DIRECTORY_PATH, 'tasks.json');
 
 async function initializeStorage() {
-    try {
-        await fs.access(FILE_PATH);
-    } catch (error) {
-        console.log(error);
-        if (error.code === 'ENOENT') {
-            console.log("Directory or file missing; creating new directory and file."); // Debug log
-            await fs.mkdir(DIRECTORY_PATH, { recursive: true });
-            await fs.writeFile(FILE_PATH, JSON.stringify([]));
-        } else {
-            throw new Error(`Failed to initialize storage: ${error.name}`);
-        }
+  try {
+    await fs.access(FILE_PATH);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      await fs.mkdir(DIRECTORY_PATH, { recursive: true });
+      await fs.writeFile(FILE_PATH, JSON.stringify([]));
+    } else {
+      throw new Error(`Failed to initialize storage: ${error.name}`);
     }
+  }
 }
 
 async function loadTasks() {
   try {
     const data = await fs.readFile(FILE_PATH);
     const tasks = await JSON.parse(data);
-    console.log(tasks);
     return tasks;
   } catch (error) {
     throw new Error(`Failed to read storage: ${error.message}`);
@@ -67,7 +64,7 @@ async function updateTask(id, updates) {
 async function deleteTask(id) {
   try {
     const tasks = await loadTasks();
-    const newTasks = tasks.filter(task => task.id != id);
+    const newTasks = tasks.filter((task) => task.id != id);
     saveTasks(newTasks);
   } catch (error) {
     throw new Error(`Failed to delete task: ${error.message}`);
