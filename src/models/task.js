@@ -9,7 +9,7 @@ export class Task {
   constructor(description, id) {
     this.#id = id || Task.currentId++;
     this.#description = this.verifyDescription(description);
-    this.#status = 'in-progress';
+    this.#status = 'todo';
     this.#createdAt = new Date();
     this.#updatedAt = this.#createdAt;
   }
@@ -26,13 +26,13 @@ export class Task {
     return description;
   }
 
-  switchStatus() {
-    if (this.#status === 'in-progress') {
-      this.#status = 'completed';
-    } else {
-      this.#status = 'in-progress';
-    }
+  set status(status) {
+    this.#status = status;
     this.#updatedAt = new Date();
+  }
+
+  get status(){
+    return this.#status;
   }
 
   get id() {
@@ -41,6 +41,7 @@ export class Task {
 
   set id(id) {
     this.#id = id;
+    this.#updatedAt = new Date();
   }
 
   get createdAt() {
@@ -53,14 +54,11 @@ export class Task {
 
   set description(description) {
     this.#description = this.verifyDescription(description);
+    this.#updatedAt = new Date();
   }
 
   get description() {
     return this.#description;
-  }
-
-  get status() {
-    return this.#status;
   }
 
   toJSON() {

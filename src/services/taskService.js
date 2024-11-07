@@ -8,7 +8,7 @@ async function initializeStorage() {
   try {
     await fs.access(FILE_PATH);
   } catch (error) {
-    if (error.code === 'ENOENT') {
+    if (error.code === 'ENOENT') {  
       await fs.mkdir(DIRECTORY_PATH, { recursive: true });
       await fs.writeFile(FILE_PATH, JSON.stringify([]));
     } else {
@@ -74,6 +74,7 @@ async function deleteTask(id) {
 async function getTasksByStatus(status) {
   try {
     const tasks = await loadTasks();
+    if (status === undefined) return tasks;
     return tasks.filter((task) => task.status === status);
   } catch (error) {
     throw new Error(`Failed to get tasks by status: ${error.message}`);

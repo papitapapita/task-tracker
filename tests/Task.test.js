@@ -21,8 +21,8 @@ describe('Task Class', () => {
         const task = new Task('Test task');
         expect(task.updatedAt).toEqual(task.createdAt);
         await new Promise(resolve => setTimeout(resolve, 1));
-        task.switchStatus();
-        expect(task.status).toBe('completed');
+        task.status = 'done';
+        expect(task.status).toBe('done');
         expect(task.updatedAt).not.toEqual(task.createdAt);
     });
 
