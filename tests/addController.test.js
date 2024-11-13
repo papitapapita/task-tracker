@@ -1,7 +1,7 @@
 import { addController } from "../src/controllers/addController.js";
 import { addTask } from "../src/services/taskService.js";
 
-jest.mock('../src/services/taskService.js')
+jest.mock('../src/services/taskService.js');
 
 describe('addController', () => {
     beforeEach(() => {
@@ -32,9 +32,4 @@ describe('addController', () => {
         expect(consoleSpy).toHaveBeenCalledWith('Description cannot be empty');
         consoleSpy.mockRestore();
     });
-
-/*
-    it('add task to file', async () => {
-        await addController('Run');
-    });*/
 });
