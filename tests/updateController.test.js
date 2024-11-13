@@ -1,9 +1,9 @@
-import { markController } from "../src/controllers/markController.js";
+import { updateController } from "../src/controllers/updateController.js";
 import { updateTask } from "../src/services/taskService.js";
 
 jest.mock('../src/services/taskService.js');
 
-describe('markController', () => {
+describe('updateController', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -11,20 +11,11 @@ describe('markController', () => {
     it('should log error if no arguments', async () => {
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-        await markController(undefined, 1);
+        await updateController(1, undefined);
         expect(consoleSpy).toHaveBeenCalledWith('No arguments');
 
-        await markController('done', undefined);
+        await updateController(undefined, 'update task');
         expect(consoleSpy).toHaveBeenCalledWith('No arguments');
-
-        consoleSpy.mockRestore();
-    });
-
-    it('should log error if unexpected status', async () => {
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-        await markController('completed', 1);
-        expect(consoleSpy).toHaveBeenCalledWith('Unexpected status');
 
         consoleSpy.mockRestore();
     });
@@ -32,21 +23,21 @@ describe('markController', () => {
     it('should log error if wrong id type', async () => {
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-        await markController('done', '123gs');
+        await updateController('123gs', 'done');
         expect(consoleSpy).toHaveBeenCalledWith('id must be an integer number');
 
-        await markController('done', 1.2);
+        await updateController(1.2, 'done');
         expect(consoleSpy).toHaveBeenCalledWith('id must be an integer number');
 
         consoleSpy.mockRestore();
     });
 
-    it('should update the status', async () => {
-        const status = 'done';
+    it('should update the task', async () => {
+        const description = 'test update';
         const id = 1;
 
-        await markController(status, id);
-        expect(updateTask).toHaveBeenCalledWith(id, { status });
+        await updateController(id, description);
+        expect(updateTask).toHaveBeenCalledWith(id, { description });
     });
 
     it('should log an error if updateTask throws an unexpected error', async () => {
@@ -58,7 +49,7 @@ describe('markController', () => {
 
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-        await expect(markController(status, id)).rejects.toThrow(
+        await expect(updateController(id, status)).rejects.toThrow(
             new Error(`Something went wrong: ${unexpectedErrorMessage}`)
         );
 
