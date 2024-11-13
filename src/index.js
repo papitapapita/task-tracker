@@ -1,20 +1,14 @@
-#!/usr/bin/env node
+import { addCommand } from './commands/addCommand.js';
+import { deleteCommand } from './commands/deleteCommand.js';
+import { listCommand } from './commands/listCommand.js';
+import { markCommand } from './commands/markCommand.js';
+import { updateCommand } from './commands/updateCommand.js';
 
-import process from 'node:process';
-import fs from 'node:fs';
-
-const currentDirectory = process.cwd();
-
-/*if (!fs.stat(`${currentDirectory}/tasks.json`)) {
-    console.log('Hello there')
-}
-console.log(fs);
-//fs.readFile('./tasks.json');*/
-
-const userInput = process.argv.slice(2);
-
-
-
-//switch()
-
+export const commands = {
+    add: addCommand,
+    delete: deleteCommand,
+    list: listCommand,
+    mark: markCommand,
+    update: updateCommand
+};
 
