@@ -13,12 +13,12 @@ async function addController(description) {
         const task = new Task(description, id);
         await addTask(task);
     } catch (error) {
-        if (error.name !== 'TypeError' &&
+        /*if (error.name !== 'TypeError' &&
             error.message !== 'Description cannot be empty') {
+            }*/
             throw new Error(`Something went wrong: ${error.message}`);
-        }
 
-        console.error(error.message);
+        //console.error(error.message);
     }
 }
 

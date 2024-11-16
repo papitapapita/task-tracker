@@ -7,15 +7,15 @@ export async function updateController(id, update) {
         if (update == undefined || id == undefined) {
             throw new Error(errorMessages[0]);
         }
-        if (Number.isNaN(id) || !Number.isInteger(id)) {
+        if (isNaN(id) || !Number.isInteger(parseInt(id))) {
             throw new TypeError(errorMessages[1]);
         }
 
         await updateTask(parseInt(id), { description: update });
     } catch (error) {
-        if ( !errorMessages.includes(error.message) ) {
+       /* if ( !errorMessages.includes(error.message) ) {
             throw new Error(`Something went wrong: ${error.message}`);
-        }
+        }*/
 
         console.error(error.message);
     }
