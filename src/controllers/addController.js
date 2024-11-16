@@ -1,7 +1,5 @@
 import { Task } from "../models/task.js";
-import { addTask } from "../services/taskService.js";
-
-let idCounter = 0;
+import { addTask, loadTasks } from "../services/taskService.js";
 
 async function addController(description) {
     try {
@@ -9,7 +7,10 @@ async function addController(description) {
             throw new Error('No arguments');
         }
 
-        const task = new Task(description, idCounter++);
+        const tasks = await loadTasks();
+        const id = tasks.at(-1).id + 1;
+
+        const task = new Task(description, id);
         await addTask(task);
     } catch (error) {
         if (error.name !== 'TypeError' &&

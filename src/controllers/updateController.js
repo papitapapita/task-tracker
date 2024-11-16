@@ -11,7 +11,7 @@ export async function updateController(id, update) {
             throw new TypeError(errorMessages[1]);
         }
 
-        await updateTask(id, { description: update });
+        await updateTask(parseInt(id), { description: update });
     } catch (error) {
         if ( !errorMessages.includes(error.message) ) {
             throw new Error(`Something went wrong: ${error.message}`);

@@ -37,6 +37,7 @@ async function saveTasks(tasks) {
 
 async function addTask(task) {
   try {
+    await initializeStorage();
     const tasks = await loadTasks();
     tasks.push(task);
     await saveTasks(tasks);
